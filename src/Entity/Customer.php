@@ -35,6 +35,7 @@ class Customer
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"customers_read", "invoices_read"})
      */
     private $id;
 
@@ -94,21 +95,23 @@ class Customer
      * @Groups({"customers_read"})
      * @return float
      */
-    public function getTotalAmount(): float {
-        return array_reduce($this->invoices->toArray(), function($total, $invoice) {
+    public function getTotalAmount(): float
+    {
+        return array_reduce($this->invoices->toArray(), function ($total, $invoice) {
             return $total + $invoice->getAmount();
         }, 0);
     }
-    
+
     /**
      * Permet de récupérer le montant total non payé (montant total hors factures payées ou annulées) 
      * @Groups({"customers_read"})
      * @return float
      */
-    public function getUnpaidAmount(): float {
-        return array_reduce($this->invoices->toArray(), function($total, $invoice) {
-            return $total + ($invoice->getStatus() === "PAID" || $invoice->getStatus() === "CANCELLED" ? 0 : 
-            $invoice->getAmount());
+    public function getUnpaidAmount(): float
+    {
+        return array_reduce($this->invoices->toArray(), function ($total, $invoice) {
+            return $total + ($invoice->getStatus() === "PAID" || $invoice->getStatus() === "CANCELLED" ? 0 :
+                $invoice->getAmount());
         }, 0);
     }
 
