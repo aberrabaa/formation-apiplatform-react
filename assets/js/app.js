@@ -13,9 +13,12 @@ import {
 
 import HomePage from "./pages/HomePage";
 import CustomersPage from "./pages/CustomersPage";
+import CustomerPage from "./pages/CustomerPage";
 import CustomersPageWithPagination from "./pages/CustomersPageWithPagination";
 import InvoicesPage from "./pages/InvoicesPage";
+import InvoicePage from "./pages/InvoicePage";
 import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 import authAPI from "./services/authAPI";
 import AuthContext from "./contexts/AuthContext";
 
@@ -42,9 +45,12 @@ const App = () => {
         <NavBarWithRouter />
         <main className="container pt-5">
           <Switch>
-            <PrivateRoute path="/invoices" component={InvoicesPage} />
-            <PrivateRoute path="/customers" component={CustomersPage} />
             <Route path="/login" component={LoginPage} />
+            <Route path="/register" component={RegisterPage} />
+            <PrivateRoute path="/invoices/:id" component={InvoicePage} />
+            <PrivateRoute path="/invoices" component={InvoicesPage} />
+            <PrivateRoute path="/customers/:id" component={CustomerPage} />
+            <PrivateRoute path="/customers" component={CustomersPage} />
             <Route path="/" component={HomePage} />
           </Switch>
         </main>
